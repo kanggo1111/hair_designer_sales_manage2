@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "351020799516",
+    "firebase_url": "https://hair-designer-sales-manage-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "hair-designer-sales-manage",
+    "storage_bucket": "hair-designer-sales-manage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351020799516:android:f90932a8d933f9be90b1d9",
+        "android_client_info": {
+          "package_name": "com.example.hair_designer_sales_manage2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWPkJ3y43Pz3HNkIS5zYRiF0l9nrlyYrE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
