@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hair_designer_sales_manage2/controller/auth_controller.dart';
 import 'package:hair_designer_sales_manage2/view/signup.dart';
 
 class Login extends StatelessWidget {
@@ -31,7 +32,7 @@ class Login extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 20.0),
                         child: TextField(
                           decoration: InputDecoration(
-                              border: InputBorder.none, hintText: 'ID'),
+                              border: InputBorder.none, hintText: 'Email'),
                         ),
                       ),
                     ),
@@ -60,7 +61,8 @@ class Login extends StatelessWidget {
                     height: 10,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                    },
                     child: Container(
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25.0),
