@@ -8,6 +8,9 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var emailController = TextEditingController();
+    var passwordController = TextEditingController();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -31,6 +34,7 @@ class Login extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20.0),
                         child: TextField(
+                          controller: emailController,
                           decoration: InputDecoration(
                               border: InputBorder.none, hintText: 'Email'),
                         ),
@@ -50,6 +54,7 @@ class Login extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20.0),
                         child: TextField(
+                          controller: passwordController,
                           obscureText: true,
                           decoration: InputDecoration(
                               border: InputBorder.none, hintText: 'Password'),
@@ -62,6 +67,13 @@ class Login extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
+                      // TODO: remove this. this is for test.
+                      emailController.value = TextEditingValue(text: 'test@test.com');
+                      passwordController.value = TextEditingValue(text: '123456');
+
+                      AuthController.instance.login(
+                          emailController.text.trim(),
+                          passwordController.text.trim());
                     },
                     child: Container(
                       child: Padding(

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair_designer_sales_manage2/view/login.dart';
+import 'package:hair_designer_sales_manage2/view/main_view.dart';
 import 'package:hair_designer_sales_manage2/view/welcome.dart';
 
 class AuthController extends GetxController {
@@ -23,7 +24,7 @@ class AuthController extends GetxController {
       Get.offAll(() => Login());
     }
     else{
-      Get.offAll(() => Welcome());
+      Get.offAll(() => MainView());
     }
   }
 
@@ -38,5 +39,22 @@ class AuthController extends GetxController {
           titleText: Text('Registration is failed', style: TextStyle(color: Colors.white),),
           messageText: Text(e.toString(), style: TextStyle(color: Colors.white),));
     }
+  }
+
+  void login(String email, password) async {
+    try {
+      await authentication.signInWithEmailAndPassword(
+          email: email, password: password);
+    } catch (e) {
+      Get.snackbar('Error message', 'User message',
+          backgroundColor: Colors.red,
+          snackPosition: SnackPosition.BOTTOM,
+          titleText: Text('login is failed', style: TextStyle(color: Colors.white),),
+          messageText: Text(e.toString(), style: TextStyle(color: Colors.white),));
+    }
+  }
+
+  void logout(){
+    authentication.signOut();
   }
 }

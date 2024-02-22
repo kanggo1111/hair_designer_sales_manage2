@@ -7,9 +7,6 @@ import 'package:hair_designer_sales_manage2/view/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // ).then((value) => Get.put(AuthController()));
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

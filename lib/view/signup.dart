@@ -65,8 +65,6 @@ class SignUp extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      print(emailController.text.trim());
-                      print(passwordController.text.trim());
                       AuthController.instance.register(
                           emailController.text.trim(),
                           passwordController.text.trim());
