@@ -1,4 +1,6 @@
 import 'dart:convert';
+
+import 'package:intl/intl.dart';
 /// id : 20240218124905520
 /// date : "2024-02-03"
 /// type : "지명"
@@ -14,7 +16,9 @@ class Item {
       String? type, 
       int? count, 
       int? price,}){
-    _id = id;
+    String newId = DateFormat('yMMddHHmmssS').format(DateTime.now());
+    newId = newId.substring(0, newId.length-2);
+    _id = int.parse(newId);
     _date = date;
     _type = type;
     _count = count;
