@@ -5,16 +5,19 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Settings', style: TextStyle(fontSize: 40),)
-          ],
-        )
-      ],
+    return Container(
+      color: Colors.teal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Settings', style: TextStyle(fontSize: 40),)
+            ],
+          )
+        ],
+      ),
     );
   }
 }
