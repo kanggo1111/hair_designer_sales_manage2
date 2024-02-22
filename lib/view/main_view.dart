@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hair_designer_sales_manage2/devel.dart';
 import 'package:hair_designer_sales_manage2/view/calendar.dart';
+import 'package:hair_designer_sales_manage2/view/one_day_view.dart';
 import 'package:hair_designer_sales_manage2/view/settings.dart';
 import 'package:hair_designer_sales_manage2/view/statistics.dart';
 
@@ -11,9 +11,9 @@ class MainView extends StatelessWidget {
   MainView({super.key});
 
   bool _isLoaded = true; // TODO:
-  final _navigatorKey = GlobalKey<NavigatorState>();
 
   static const routeCalendar = "/";
+  static const routeOneDayView = "/one_day_view";
   static const routeStatistics = "/statistics";
   static const routeSettings = "/settings";
 
@@ -22,29 +22,34 @@ class MainView extends StatelessWidget {
   Route _onGenerateRoute(RouteSettings setting) {
     // TODO: set transition direction.
     bool dir = false;
-    if(prevRoute == routeSettings){
+    if (prevRoute == routeSettings) {
       dir = true;
     }
     prevRoute = setting.name!;
+
+    Get.routing.args = setting.arguments;
 
     if (setting.name == routeCalendar) {
       return GetPageRoute(
         page: () => Calendar(),
         transition: Transition.leftToRight,
       );
+    } else if (setting.name == routeOneDayView) {
+      return GetPageRoute(
+        page: () => OneDayView(setting.arguments as String),
+        transition: Transition.downToUp,
+      );
     } else if (setting.name == routeStatistics) {
       return GetPageRoute(
         page: () => Statistics(),
         transition: dir ? Transition.leftToRight : Transition.rightToLeft,
       );
-    }
-    else if (setting.name == routeSettings) {
+    } else if (setting.name == routeSettings) {
       return GetPageRoute(
         page: () => Settings(),
         transition: Transition.rightToLeft,
       );
-    }
-    else {
+    } else {
       throw Exception('Unknown route: ${setting.name}');
     }
   }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair_designer_sales_manage2/view/login.dart';
 import 'package:hair_designer_sales_manage2/view/main_view.dart';
-import 'package:hair_designer_sales_manage2/view/welcome.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();

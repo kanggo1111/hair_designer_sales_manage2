@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hair_designer_sales_manage2/view/main_view.dart';
+import 'package:hair_designer_sales_manage2/view/one_day_view.dart';
 import 'package:intl/intl.dart';
 
 Color calendarBorderColor = Colors.grey[400]!;
@@ -165,53 +168,57 @@ Widget DayContainer(String day, int index) {
     needTodayBorder = true;
   }
 
-  day = day.substring(5, day.length);
-  if (int.parse(day.substring(0, 2)) != currentMonth) {
-    if (day.substring(0, 1) == '0') {
-      day = day.substring(1, day.length);
+  dayText = day.substring(5, day.length);
+  if (int.parse(dayText.substring(0, 2)) != currentMonth) {
+    if (dayText.substring(0, 1) == '0') {
+      dayText = dayText.substring(1, dayText.length);
     }
-    day = day.replaceAll('-0', '.').replaceAll('-', '.');
-    dayText = day;
+    dayText = dayText.replaceAll('-0', '.').replaceAll('-', '.');
     dayColor = dayColor.withOpacity(0.5);
     priceColor = priceColor.withOpacity(0.5);
 
     needShadow = true;
   } else {
-    dayText = int.parse(day.substring(3, 5)).toString();
+    dayText = int.parse(dayText.substring(3, 5)).toString();
   }
 
-  return Stack(
-    children: [
-      Container(
-        padding: needTodayBorder ? null : EdgeInsets.all(3),
-        decoration: BoxDecoration(
-            border: Border.all(
-                color: needTodayBorder
-                    ? calendarTodayBorderColor
-                    : calendarBorderColor,
-                width: needTodayBorder
-                    ? calendarTodayBorderWidth
-                    : calendarBorderWidth)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              dayText,
-              style: TextStyle(color: dayColor),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  '2,000,000',
-                  style: TextStyle(fontSize: 10, color: priceColor),
-                ),
-              ],
-            ),
-          ],
+  return GestureDetector(
+    onTap: () {
+      Get.toNamed(MainView.routeOneDayView, arguments: day, id: 1);
+    },
+    child: Stack(
+      children: [
+        Container(
+          padding: needTodayBorder ? null : EdgeInsets.all(3),
+          decoration: BoxDecoration(
+              border: Border.all(
+                  color: needTodayBorder
+                      ? calendarTodayBorderColor
+                      : calendarBorderColor,
+                  width: needTodayBorder
+                      ? calendarTodayBorderWidth
+                      : calendarBorderWidth)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                dayText,
+                style: TextStyle(color: dayColor),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    '2,000,000',
+                    style: TextStyle(fontSize: 10, color: priceColor),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-      if (needShadow) Container(color: Colors.grey.withOpacity(0.15)),
-    ],
+        if (needShadow) Container(color: Colors.grey.withOpacity(0.15)),
+      ],
+    ),
   );
 }
