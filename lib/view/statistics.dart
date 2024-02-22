@@ -57,6 +57,7 @@ class _StatisticsState extends State<Statistics> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
+            margin: EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
