@@ -18,7 +18,6 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -50,57 +49,63 @@ class _CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     calendarTodayBorderColor = Theme.of(context).colorScheme.primary;
 
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  GestureDetector(
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            setPrevMonth();
+                          });
+                        },
+                        child: Icon(
+                          Icons.arrow_left,
+                          size: 40,
+                        )),
+                    Text(
+                      '$currentYear. ${currentMonth.toString().padLeft(2, '0')}',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                    GestureDetector(
                       onTap: () {
                         setState(() {
-                          setPrevMonth();
+                          setNextMonth();
                         });
                       },
                       child: Icon(
-                        Icons.arrow_left,
+                        Icons.arrow_right,
                         size: 40,
-                      )),
-                  Text(
-                    '$currentYear. ${currentMonth.toString().padLeft(2, '0')}',
-                    style: TextStyle(fontSize: 24),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        setNextMonth();
-                      });
-                    },
-                    child: Icon(
-                      Icons.arrow_right,
-                      size: 40,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              // TODO:
-              Text('월매출: 10,000,000', style: TextStyle(fontSize: 18),),
-            ],
+                  ],
+                ),
+                // TODO:
+                Text(
+                  '월매출: 10,000,000',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ],
+            ),
           ),
-        ),
-        CalendarTable(),
-      ],
+          CalendarTable(),
+        ],
+      ),
     );
   }
 }
 
+/********** Function **********/
+
 int getStartingDay(int year, int month) {
-  switch (DateFormat('E')
-      .format(DateTime(year, month, 1))
-      .toUpperCase()) {
+  switch (DateFormat('E').format(DateTime(year, month, 1)).toUpperCase()) {
     case 'SUN':
       return 0;
     case 'MON':
@@ -120,22 +125,24 @@ int getStartingDay(int year, int month) {
   }
 }
 
-Widget CalendarTable(){
+/********** Widget **********/
+
+Widget CalendarTable() {
   int startingDay = getStartingDay(currentYear, currentMonth);
 
   return Container(
     margin: EdgeInsets.all(10),
     decoration: BoxDecoration(
-        border: Border.all(
-            color: calendarBorderColor, width: calendarBorderWidth)),
+        border:
+            Border.all(color: calendarBorderColor, width: calendarBorderWidth)),
     child: GridView.builder(
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 7, childAspectRatio: 0.8),
         itemCount: 42,
         itemBuilder: (context, index) {
-          String day = DateFormat('y-MM-dd').format(DateTime(
-              currentYear, currentMonth, 1 - startingDay + index));
+          String day = DateFormat('y-MM-dd').format(
+              DateTime(currentYear, currentMonth, 1 - startingDay + index));
           return DayContainer(day, index);
         }),
   );
@@ -148,19 +155,19 @@ Widget DayContainer(String day, int index) {
   bool needShadow = false;
   bool needTodayBorder = false;
 
-  if(index % 7 == 0){
+  if (index % 7 == 0) {
     dayColor = Colors.red;
-  }else if(index % 7 == 6){
+  } else if (index % 7 == 6) {
     dayColor = Colors.blue;
   }
 
-  if(day == DateFormat('y-MM-dd').format(now)){
+  if (day == DateFormat('y-MM-dd').format(now)) {
     needTodayBorder = true;
   }
 
   day = day.substring(5, day.length);
-  if(int.parse(day.substring(0, 2)) != currentMonth){
-    if(day.substring(0, 1) == '0'){
+  if (int.parse(day.substring(0, 2)) != currentMonth) {
+    if (day.substring(0, 1) == '0') {
       day = day.substring(1, day.length);
     }
     day = day.replaceAll('-0', '.').replaceAll('-', '.');
@@ -169,7 +176,7 @@ Widget DayContainer(String day, int index) {
     priceColor = priceColor.withOpacity(0.5);
 
     needShadow = true;
-  }else{
+  } else {
     dayText = int.parse(day.substring(3, 5)).toString();
   }
 
@@ -179,22 +186,32 @@ Widget DayContainer(String day, int index) {
         padding: needTodayBorder ? null : EdgeInsets.all(3),
         decoration: BoxDecoration(
             border: Border.all(
-                color: needTodayBorder ? calendarTodayBorderColor : calendarBorderColor,
-                width: needTodayBorder ? calendarTodayBorderWidth : calendarBorderWidth)),
+                color: needTodayBorder
+                    ? calendarTodayBorderColor
+                    : calendarBorderColor,
+                width: needTodayBorder
+                    ? calendarTodayBorderWidth
+                    : calendarBorderWidth)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(dayText, style: TextStyle(color: dayColor),),
+            Text(
+              dayText,
+              style: TextStyle(color: dayColor),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text('2,000,000', style: TextStyle(fontSize: 10, color: priceColor),),
+                Text(
+                  '2,000,000',
+                  style: TextStyle(fontSize: 10, color: priceColor),
+                ),
               ],
             ),
           ],
         ),
       ),
-      if(needShadow) Container(color: Colors.grey.withOpacity(0.15)),
+      if (needShadow) Container(color: Colors.grey.withOpacity(0.15)),
     ],
   );
 }
