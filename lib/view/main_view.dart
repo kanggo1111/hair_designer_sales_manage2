@@ -66,7 +66,7 @@ class MainView extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  Get.toNamed(routeCalendar, id: 1);
+                  Get.offAllNamed(routeCalendar, id: 1);
                 },
                 icon: Icon(
                   Icons.calendar_month,
@@ -74,12 +74,12 @@ class MainView extends StatelessWidget {
                 )),
             IconButton(
                 onPressed: () {
-                  Get.toNamed(routeStatistics, id: 1);
+                  Get.offAllNamed(routeStatistics, id: 1);
                 },
                 icon: Icon(Icons.bar_chart_sharp, color: appBarContentColor)),
             IconButton(
                 onPressed: () {
-                  Get.toNamed(routeSettings, id: 1);
+                  Get.offAllNamed(routeSettings, id: 1);
                 },
                 icon: Icon(Icons.settings, color: appBarContentColor)),
           ],

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair_designer_sales_manage2/controller/month_item_controller.dart';
@@ -22,8 +23,8 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-
-  final MonthItemController monthItemController = Get.put(MonthItemController());
+  final MonthItemController monthItemController =
+      Get.put(MonthItemController());
 
   @override
   void initState() {
@@ -31,7 +32,8 @@ class _CalendarState extends State<Calendar> {
     now = DateTime.now();
     currentYear = now.year;
     currentMonth = now.month;
-    monthItemController.date = now.toString();
+    monthItemController.date = int.parse(
+        DateFormat('yMMdd').format(DateTime(currentYear, currentMonth, 1)));
     monthItemController.fetchMonthItem();
     super.initState();
   }
@@ -43,6 +45,9 @@ class _CalendarState extends State<Calendar> {
     } else {
       currentMonth--;
     }
+    monthItemController.date = int.parse(
+        DateFormat('yMMdd').format(DateTime(currentYear, currentMonth, 1)));
+    monthItemController.fetchMonthItem();
   }
 
   void setNextMonth() {
@@ -52,6 +57,9 @@ class _CalendarState extends State<Calendar> {
     } else {
       currentMonth++;
     }
+    monthItemController.date = int.parse(
+        DateFormat('yMMdd').format(DateTime(currentYear, currentMonth, 1)));
+    monthItemController.fetchMonthItem();
   }
 
   @override
@@ -97,10 +105,11 @@ class _CalendarState extends State<Calendar> {
                   ],
                 ),
                 // TODO:
-                Text(
-                  '월매출: 10,000,000',
-                  style: TextStyle(fontSize: 18),
-                ),
+                // GetBuilder<MonthItemController>(
+                //     builder: (_) => Text(
+                //           '월매출: ${NumberFormat('###,###,###,###').format()}',
+                //           style: TextStyle(fontSize: 18),
+                //         )),
               ],
             ),
           ),

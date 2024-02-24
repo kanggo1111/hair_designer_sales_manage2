@@ -15,7 +15,7 @@ String itemToJson(Item data) => json.encode(data.toJson());
 class Item {
   Item({
     String? id,
-    String? date,
+    int? date,
     String? type,
     int? count,
     int? price,
@@ -36,14 +36,14 @@ class Item {
   }
 
   String? _id;
-  String? _date;
+  int? _date;
   String? _type;
   int? _count;
   int? _price;
 
   String? get id => _id;
 
-  String? get date => _date;
+  int? get date => _date;
 
   String? get type => _type;
 

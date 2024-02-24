@@ -7,7 +7,7 @@ List<String> itemTypeList = ['지명', '신규', '대체', '점판'];
 
 class ItemController extends GetxController {
   final _items = <Item>[].obs;
-  String date = '';
+  int date = 0;
 
   List<Item> get items => _items;
 

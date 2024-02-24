@@ -45,7 +45,7 @@ class _OneDayViewState extends State<OneDayView> {
 
   @override
   Widget build(BuildContext context) {
-    itemController.date = widget.day;
+    itemController.date = int.parse(widget.day.replaceAll('-', ''));
 
     return GetX<ItemController>(builder: (_) {
       return Container(
