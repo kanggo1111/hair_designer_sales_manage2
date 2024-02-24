@@ -1,11 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair_designer_sales_manage2/model/Item.dart';
 
+List<String> itemTypeList = ['지명', '신규', '대체', '점판'];
+
 class ItemController extends GetxController {
-  var _items = <Item>[].obs;
+  final _items = <Item>[].obs;
+  String date = '';
+
+  List<Item> get items => _items;
 
   @override
   void onReady() {
@@ -51,7 +55,8 @@ class ItemController extends GetxController {
         .collection('item')
         .doc(user!.uid)
         .collection('items')
-        .orderBy('id', descending: true)
+        .where('date', isEqualTo: date)
+        .orderBy('id')
         .snapshots();
     snapshots.listen((QuerySnapshot query) {
       if (query.docChanges.isNotEmpty) {
