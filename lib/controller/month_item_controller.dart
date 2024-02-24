@@ -25,11 +25,13 @@ class MonthItemController extends GetxController {
         .collection('item')
         .doc(user!.uid)
         .collection('items')
-        .where('date', isGreaterThan: date.substring(0, 7))
+        // .where('date', isGreaterThanOrEqualTo: date.substring(0, 7))
         .get();
 
     snapshots.docs.forEach((element) {
-      print(element);
+      // print(element['date']);
+      // print(date.substring(0, 7));
+
       items.add(Item.fromJson(element));
     });
   }

@@ -31,6 +31,8 @@ class _CalendarState extends State<Calendar> {
     now = DateTime.now();
     currentYear = now.year;
     currentMonth = now.month;
+    monthItemController.date = now.toString();
+    monthItemController.fetchMonthItem();
     super.initState();
   }
 
