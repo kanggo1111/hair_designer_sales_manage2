@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hair_designer_sales_manage2/controller/month_item_controller.dart';
 import 'package:hair_designer_sales_manage2/view/main_view.dart';
 import 'package:hair_designer_sales_manage2/view/one_day_view.dart';
 import 'package:intl/intl.dart';
@@ -21,6 +22,9 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
+
+  final MonthItemController monthItemController = Get.put(MonthItemController());
+
   @override
   void initState() {
     // TODO: implement initState
