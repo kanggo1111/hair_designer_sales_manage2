@@ -80,18 +80,25 @@ class _OneDayViewState extends State<OneDayView> {
                                           0.15,
                                       alignment: Alignment.center,
                                       child: Text(itemController
-                                          .items[index].count
-                                          .toString() + '명')),
+                                              .items[index].count
+                                              .toString() +
+                                          '명')),
                                   Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.25,
                                       alignment: Alignment.center,
-                                      child: Text(NumberFormat('###,###,###,###').format(
-                                          itemController.items[index].price))),
+                                      child: Text(
+                                          NumberFormat('###,###,###,###')
+                                              .format(itemController
+                                                  .items[index].price))),
                                 ],
                               ),
                               IconButton(
-                                  onPressed: () {}, icon: Icon(Icons.delete))
+                                  onPressed: () {
+                                    itemController.removeItem(
+                                        itemController.items[index].id!);
+                                  },
+                                  icon: Icon(Icons.delete))
                             ],
                           ),
                         );

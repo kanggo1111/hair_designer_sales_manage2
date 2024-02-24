@@ -17,10 +17,10 @@ class ItemController extends GetxController {
     super.onReady();
     _items.bindStream(fetchItemStream());
     ever(_items, (_) {
-      _items.forEach((element) {
-        print(element.id);
-      });
-      print('---------------------------');
+      // _items.forEach((element) {
+      //   print(element.id);
+      // });
+      // print('---------------------------');
     });
   }
 
@@ -35,9 +35,12 @@ class ItemController extends GetxController {
         .add(newItem.toJson());
   }
 
-  // void removeItem(){
-  //
-  // }
+  void removeItem(String docID) async{
+    await FirebaseFirestore.instance
+        .collection('item')
+        .doc(user!.uid)
+        .collection('items').doc(docID).delete();
+  }
   //
   // void editItem(){
   //
@@ -67,15 +70,6 @@ class ItemController extends GetxController {
       snapshot.docs.forEach((messageData) {
         items.add(Item.fromJson(messageData));
       });
-      // print('Total message fetched: ${items.length}');
-      // items.toList().forEach((element) {
-      //   print(element.id);
-      //   print(element.date);
-      //   print(element.type);
-      //   print(element.count);
-      //   print(element.price);
-      //   print('----------------');
-      // });
       return items.toList();
     });
   }
