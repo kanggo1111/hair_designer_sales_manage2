@@ -105,11 +105,12 @@ class _CalendarState extends State<Calendar> {
                   ],
                 ),
                 // TODO:
-                // GetBuilder<MonthItemController>(
-                //     builder: (_) => Text(
-                //           '월매출: ${NumberFormat('###,###,###,###').format()}',
-                //           style: TextStyle(fontSize: 18),
-                //         )),
+                GetBuilder<MonthItemController>(
+                    builder: (_) => Text(
+                          NumberFormat('###,###,###,###')
+                              .format(monthItemController.getMonthPrice()),
+                          style: TextStyle(fontSize: 18),
+                        )),
               ],
             ),
           ),
@@ -223,10 +224,17 @@ Widget DayContainer(String day, int index) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    '2,000,000',
-                    style: TextStyle(fontSize: 10, color: priceColor),
-                  ),
+                  GetBuilder<MonthItemController>(builder: (_) {
+                    int dayPrice = Get.find<MonthItemController>().getDayPrice(int.parse(day.substring(5, day.length).replaceAll('-', '')));
+                    return Text(
+                        dayPrice == 0 ?
+                            '' :
+                      NumberFormat('###,###,###,###')
+                          .format(dayPrice),
+                      // Get.find<MonthItemController>().date.toString(),
+                      style: TextStyle(fontSize: 10, color: priceColor),
+                    );
+                  }),
                 ],
               ),
             ],

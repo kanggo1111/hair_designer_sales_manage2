@@ -24,17 +24,16 @@ class MonthItemController extends GetxController {
 
     items.clear();
     snapshots.docs.forEach((element) {
-      print(element['date']);
-
       items.add(Item.fromJson(element));
       update();
     });
   }
 
   int getMonthPrice(){
-    // return _items.fold<int>(0, (previousValue, element) => previousValue + element.price);
+    return _items.fold<int>(0, (previousValue, element) => previousValue + element.price!);
+  }
 
-
-    return 0;
+  int getDayPrice(int day){
+    return _items.fold<int>(0, (previousValue, element) => (element.date!%1000 == day) ? previousValue + element.price! : previousValue);
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hair_designer_sales_manage2/controller/item_controller.dart';
 import 'package:hair_designer_sales_manage2/model/Item.dart';
+import 'package:hair_designer_sales_manage2/view/main_view.dart';
 import 'package:intl/intl.dart';
 
 List<int> typeCount = List.generate(itemTypeList.length, (index) => 0);
