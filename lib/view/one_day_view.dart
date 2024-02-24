@@ -1,11 +1,16 @@
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hair_designer_sales_manage2/controller/item_controller.dart';
 import 'package:hair_designer_sales_manage2/model/Item.dart';
 import 'package:intl/intl.dart';
+
+List<int> typeCount = List.generate(itemTypeList.length, (index) => 0);
+int priceOfDay = 0;
 
 class OneDayView extends StatefulWidget {
   OneDayView(this.day, {super.key});
@@ -35,6 +40,7 @@ class _OneDayViewState extends State<OneDayView> {
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
     Get.back(id: 1);
+    FocusScope.of(context).unfocus();
     return true;
   }
 
@@ -42,80 +48,109 @@ class _OneDayViewState extends State<OneDayView> {
   Widget build(BuildContext context) {
     itemController.date = widget.day;
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: GetX<ItemController>(builder: (_) {
-        return Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                Text(widget.day),
-                Expanded(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: itemController.items.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return GetX<ItemController>(builder: (_) {
+      return Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.day,
+                  style:
+                  TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Row(
+                children: [
+                  Column(children: [
+                    Text('지명'),
+                    Text(itemController.items
+                        .fold(
+                        0,
+                            (previousValue, element) => element.type == '지명'
+                            ? previousValue + element.count!
+                            : previousValue)
+                        .toString()),
+                  ]),
+                  Column(children: [
+                    Text('신규'),
+                    Text(itemController.items
+                        .fold(
+                        0,
+                            (previousValue, element) => element.type == '신규'
+                            ? previousValue + element.count!
+                            : previousValue)
+                        .toString()),
+                  ]),
+                  Column(children: [
+                    Text('총객수'),
+                  ]),
+                  Column(children: [
+                    Text('일매출'),
+                  ]),
+                ],
+              ),
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: itemController.items.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.15,
-                                      alignment: Alignment.center,
-                                      child: Text(index.toString())),
-                                  Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.15,
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                          itemController.items[index].type!)),
-                                  Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.15,
-                                      alignment: Alignment.center,
-                                      child: Text(itemController
-                                              .items[index].count
-                                              .toString() +
-                                          '명')),
-                                  Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.25,
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                          NumberFormat('###,###,###,###')
-                                              .format(itemController
-                                                  .items[index].price))),
-                                ],
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    itemController.removeItem(
-                                        itemController.items[index].id!);
-                                  },
-                                  icon: Icon(Icons.delete))
+                              Container(
+                                  width: MediaQuery.of(context).size.width *
+                                      0.15,
+                                  alignment: Alignment.center,
+                                  child: Text(index.toString())),
+                              Container(
+                                  width: MediaQuery.of(context).size.width *
+                                      0.15,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                      itemController.items[index].type!)),
+                              Container(
+                                  width: MediaQuery.of(context).size.width *
+                                      0.15,
+                                  alignment: Alignment.center,
+                                  child: Text(itemController
+                                          .items[index].count
+                                          .toString() +
+                                      '명')),
+                              Container(
+                                  width: MediaQuery.of(context).size.width *
+                                      0.25,
+                                  alignment: Alignment.center,
+                                  child: Text(NumberFormat('###,###,###,###')
+                                      .format(itemController
+                                          .items[index].price))),
                             ],
                           ),
-                        );
-                      }),
-                ),
-                Divider(
-                  height: 0,
-                  thickness: 3,
-                ),
-                AddItemContainer(),
-                SizedBox(
-                  height: MediaQuery.of(context).viewInsets.bottom,
-                )
-              ],
-            ));
-      }),
-    );
+                          IconButton(
+                              onPressed: () {
+                                itemController.removeItem(
+                                    itemController.items[index].id!);
+                              },
+                              icon: Icon(Icons.delete))
+                        ],
+                      ),
+                    );
+                  }),
+              Divider(
+                height: 0,
+                thickness: 3,
+              ),
+              AddItemContainer(),
+              SizedBox(
+                height: MediaQuery.of(context).viewInsets.bottom,
+              )
+            ],
+          ));
+    });
   }
 }
 
@@ -125,9 +160,14 @@ class AddItemContainer extends StatelessWidget {
   final ItemController itemController = Get.put(ItemController());
 
   List<TextEditingController> typeTextEditingController = List.generate(
-      itemTypeList.length, (index) => TextEditingController()..text = '0');
-  TextEditingController priceTextEditingController =
-      (TextEditingController()..text = '0');
+      itemTypeList.length,
+      (index) => TextEditingController()..text = typeCount[index].toString());
+  TextEditingController priceTextEditingController = (TextEditingController()
+    ..text = NumberFormat('###,###,###,###').format(priceOfDay));
+
+  // List<TextEditingController> typeTextEditingController =
+  //     List.generate(itemTypeList.length, (index) => TextEditingController());
+  // TextEditingController priceTextEditingController = (TextEditingController());
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +202,8 @@ class AddItemContainer extends StatelessWidget {
                         IconButton(
                             onPressed: () {
                               setCount(index, -1);
+                              typeCount[index] = int.parse(
+                                  typeTextEditingController[index].text);
                             },
                             icon: Icon(Icons.remove_circle_outline,
                                 color: Colors.black45)),
@@ -174,6 +216,8 @@ class AddItemContainer extends StatelessWidget {
                               onTap: () {
                                 typeTextEditingController[index].value =
                                     TextEditingValue(text: '0');
+                                typeCount[index] = int.parse(
+                                    typeTextEditingController[index].text);
                               },
                               inputFormatters: [
                                 FilteringTextInputFormatter(
@@ -185,34 +229,28 @@ class AddItemContainer extends StatelessWidget {
                               textAlignVertical: TextAlignVertical.center,
                               onChanged: (value) {
                                 if (typeTextEditingController[index]
-                                        .value
                                         .text
-                                        .length >
-                                    1) {
-                                  if (typeTextEditingController[index]
-                                      .value
-                                      .text
-                                      .startsWith('0')) {
-                                    typeTextEditingController[index].value =
-                                        TextEditingValue(
-                                            text: typeTextEditingController[
-                                                    index]
-                                                .value
-                                                .text
-                                                .substring(
-                                                    1,
-                                                    typeTextEditingController[
-                                                            index]
-                                                        .value
-                                                        .text
-                                                        .length));
-                                  }
+                                        .length ==
+                                    0) {
+                                  typeTextEditingController[index].value =
+                                      TextEditingValue(text: '0');
+                                } else if (typeTextEditingController[index]
+                                    .text
+                                    .startsWith('0')) {
+                                  typeTextEditingController[index]
+                                      .text = int.parse(
+                                          typeTextEditingController[index].text)
+                                      .toString();
                                 }
+                                typeCount[index] = int.parse(
+                                    typeTextEditingController[index].text);
                               },
                             )),
                         IconButton(
                             onPressed: () {
                               setCount(index, 1);
+                              typeCount[index] = int.parse(
+                                  typeTextEditingController[index].text);
                             },
                             icon: Icon(
                               Icons.add_circle_outline,
@@ -234,11 +272,15 @@ class AddItemContainer extends StatelessWidget {
                     height: 40,
                     width: 120,
                     child: TextField(
+                      key: UniqueKey(),
                       controller: priceTextEditingController,
                       keyboardType: TextInputType.number,
                       onTap: () {
                         priceTextEditingController.value =
                             TextEditingValue(text: '0');
+                        priceOfDay = int.parse(priceTextEditingController
+                            .value.text
+                            .replaceAll(',', ''));
                       },
                       inputFormatters: [
                         FilteringTextInputFormatter(RegExp('[0-9,]'),
@@ -261,6 +303,9 @@ class AddItemContainer extends StatelessWidget {
                                 offset: priceTextEditingController
                                         .value.text.length -
                                     4));
+                        priceOfDay = int.parse(priceTextEditingController
+                            .value.text
+                            .replaceAll(',', ''));
                       },
                     ),
                   ),
@@ -281,11 +326,22 @@ class AddItemContainer extends StatelessWidget {
                           itemController.addItem(Item(
                               date: itemController.date,
                               type: itemTypeList[index],
-                              count: int.parse(
-                                  typeTextEditingController[index].value.text),
-                              price: int.parse(priceTextEditingController
-                                  .value.text
-                                  .replaceAll(',', ''))));
+                              count: typeCount[index],
+                              price: index < 2
+                                  ? (int.parse(priceTextEditingController
+                                              .value.text
+                                              .replaceAll(',', '')) *
+                                          (int.parse(typeTextEditingController[index].value.text) /
+                                              (int.parse(
+                                                      typeTextEditingController[0]
+                                                          .value
+                                                          .text) +
+                                                  int.parse(
+                                                      typeTextEditingController[1]
+                                                          .value
+                                                          .text))))
+                                      .round()
+                                  : 0));
                         }
                       }
                     } on Exception catch (e) {

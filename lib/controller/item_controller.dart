@@ -16,12 +16,12 @@ class ItemController extends GetxController {
     // TODO: implement onReady
     super.onReady();
     _items.bindStream(fetchItemStream());
-    ever(_items, (_) {
-      // _items.forEach((element) {
-      //   print(element.id);
-      // });
-      // print('---------------------------');
-    });
+    // ever(_items, (_) {
+    //   // _items.forEach((element) {
+    //   //   print(element.id);
+    //   // });
+    //   // print('---------------------------');
+    // });
   }
 
   final FirebaseAuth authentication = FirebaseAuth.instance;
@@ -41,16 +41,12 @@ class ItemController extends GetxController {
         .doc(user!.uid)
         .collection('items').doc(docID).delete();
   }
-  //
+
+  // TODO:
   // void editItem(){
   //
   // }
   //
-  // List<Item> readItem(){
-  //
-  //
-  //   return [];
-  // }
 
   Stream<List<Item>> fetchItemStream() {
     List<Item> items = [];
