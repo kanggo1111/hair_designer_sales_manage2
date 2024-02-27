@@ -1,16 +1,14 @@
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hair_designer_sales_manage2/controller/item_controller.dart';
 import 'package:hair_designer_sales_manage2/controller/month_item_controller.dart';
 import 'package:hair_designer_sales_manage2/model/Item.dart';
-import 'package:hair_designer_sales_manage2/view/main_view.dart';
 import 'package:intl/intl.dart';
 
-List<int> typeCount = List.generate(itemTypeList.length, (index) => 0);
+List<int> typeCount = [];
 int priceOfDay = 0;
 
 class OneDayView extends StatefulWidget {
@@ -30,6 +28,8 @@ class _OneDayViewState extends State<OneDayView> {
     // TODO: implement initState
     super.initState();
     BackButtonInterceptor.add(myInterceptor);
+    typeCount = List.generate(itemTypeList.length, (index) => 0);
+    priceOfDay = 0;
   }
 
   @override
