@@ -3,8 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:hair_designer_sales_manage2/model/Item.dart';
 
-List<String> itemTypeList = ['지명', '신규', '대체', '점판'];
-
 class MonthItemController extends GetxController {
   final _items = <Item>[];
   int date = 0;
@@ -35,5 +33,13 @@ class MonthItemController extends GetxController {
 
   int getDayPrice(int day){
     return _items.fold<int>(0, (previousValue, element) => (element.date!%1000 == day) ? previousValue + element.price! : previousValue);
+  }
+
+  int getTypeCount(String type){
+    return _items.fold<int>(0, (previousValue, element) => (element.type == type) ? previousValue + element.count! : previousValue);
+  }
+
+  int getTotalCount(){
+    return _items.fold<int>(0, (previousValue, element) => previousValue + element.count!);
   }
 }

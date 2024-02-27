@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair_designer_sales_manage2/controller/month_item_controller.dart';
@@ -32,9 +33,7 @@ class _CalendarState extends State<Calendar> {
     now = DateTime.now();
     currentYear = now.year;
     currentMonth = now.month;
-    monthItemController.date = int.parse(
-        DateFormat('yMMdd').format(DateTime(currentYear, currentMonth, 1)));
-    monthItemController.fetchMonthItem();
+    refreshCalendar();
     super.initState();
   }
 
@@ -45,9 +44,7 @@ class _CalendarState extends State<Calendar> {
     } else {
       currentMonth--;
     }
-    monthItemController.date = int.parse(
-        DateFormat('yMMdd').format(DateTime(currentYear, currentMonth, 1)));
-    monthItemController.fetchMonthItem();
+    refreshCalendar();
   }
 
   void setNextMonth() {
@@ -57,6 +54,10 @@ class _CalendarState extends State<Calendar> {
     } else {
       currentMonth++;
     }
+    refreshCalendar();
+  }
+
+  void refreshCalendar(){
     monthItemController.date = int.parse(
         DateFormat('yMMdd').format(DateTime(currentYear, currentMonth, 1)));
     monthItemController.fetchMonthItem();
@@ -72,8 +73,7 @@ class _CalendarState extends State<Calendar> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
               children: [
                 Row(
                   children: [
@@ -104,13 +104,16 @@ class _CalendarState extends State<Calendar> {
                     ),
                   ],
                 ),
-                // TODO:
-                GetBuilder<MonthItemController>(
-                    builder: (_) => Text(
-                          NumberFormat('###,###,###,###')
-                              .format(monthItemController.getMonthPrice()),
-                          style: TextStyle(fontSize: 18),
-                        )),
+                SizedBox(height: 10,),
+                Divider(
+                  height: 0,
+                  thickness: 3,
+                ),
+                SummaryTable(),
+                Divider(
+                  height: 0,
+                  thickness: 3,
+                ),
               ],
             ),
           ),
@@ -145,6 +148,50 @@ int getStartingDay(int year, int month) {
 }
 
 /********** Widget **********/
+
+Widget SummaryTable(){
+  MonthItemController monthItemController = Get.find<MonthItemController>();
+  double titleFontSize = 14;
+  double valueFontSize = 16;
+
+  return GetBuilder<MonthItemController>(
+    builder: (_) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(width: 20,),
+            Column(children: [
+              Text('지명', style: TextStyle(fontSize: titleFontSize),),
+              SizedBox(height: 5,),
+              Text(monthItemController.getTypeCount('지명').toString(), style: TextStyle(fontSize: valueFontSize)),
+            ]),
+            SizedBox(width: 10,),
+            Column(children: [
+              Text('신규', style: TextStyle(fontSize: titleFontSize)),
+              SizedBox(height: 5,),
+              Text(monthItemController.getTypeCount('신규').toString(), style: TextStyle(fontSize: valueFontSize)),
+            ]),
+            SizedBox(width: 10,),
+            Column(children: [
+              Text('총객수', style: TextStyle(fontSize: titleFontSize)),
+              SizedBox(height: 5,),
+              Text(monthItemController.getTotalCount().toString(), style: TextStyle(fontSize: valueFontSize)),
+            ]),
+            SizedBox(width: 10,),
+            Column(children: [
+              Text('월매출', style: TextStyle(fontSize: titleFontSize)),
+              SizedBox(height: 5,),
+              Text(NumberFormat('###,###,###,###').format(monthItemController.getMonthPrice()), style: TextStyle(fontSize: valueFontSize)),
+            ]),
+            SizedBox(width: 20,),
+          ],
+        ),
+      );
+    }
+  );
+}
 
 Widget CalendarTable() {
   int startingDay = getStartingDay(currentYear, currentMonth);

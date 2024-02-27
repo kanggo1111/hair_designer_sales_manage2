@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hair_designer_sales_manage2/controller/item_controller.dart';
+import 'package:hair_designer_sales_manage2/controller/month_item_controller.dart';
 import 'package:hair_designer_sales_manage2/model/Item.dart';
 import 'package:hair_designer_sales_manage2/view/main_view.dart';
 import 'package:intl/intl.dart';
@@ -41,6 +42,7 @@ class _OneDayViewState extends State<OneDayView> {
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
     Get.back(id: 1);
     FocusScope.of(context).unfocus();
+    Get.find<MonthItemController>().fetchMonthItem();
     return true;
   }
 

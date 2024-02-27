@@ -60,7 +60,7 @@ class MainView extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(
-            'Main View',
+            '디자이너 매출 관리',
             style: TextStyle(color: appBarContentColor),
           ),
           actions: [
