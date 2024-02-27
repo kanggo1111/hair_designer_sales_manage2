@@ -1,5 +1,6 @@
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -28,8 +29,11 @@ class _OneDayViewState extends State<OneDayView> {
     // TODO: implement initState
     super.initState();
     BackButtonInterceptor.add(myInterceptor);
+
     typeCount = List.generate(itemTypeList.length, (index) => 0);
     priceOfDay = 0;
+
+    itemController.date = int.parse(widget.day.replaceAll('-', ''));
   }
 
   @override
@@ -48,144 +52,146 @@ class _OneDayViewState extends State<OneDayView> {
 
   @override
   Widget build(BuildContext context) {
-    itemController.date = int.parse(widget.day.replaceAll('-', ''));
-
     return GetX<ItemController>(builder: (_) {
       return Container(
           color: Colors.white,
           child: Column(
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    widget.day,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              Divider(
-                height: 0,
-                thickness: 3,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(width: 20,),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(children: [
-                      Text('지명', style: TextStyle(fontSize: 15),),
-                      SizedBox(height: 10,),
-                      Text(itemController.items
-                          .fold(
-                              0,
-                              (previousValue, element) => element.type == '지명'
-                                  ? previousValue + element.count!
-                                  : previousValue)
-                          .toString(), style: TextStyle(fontSize: 18)),
-                    ]),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(children: [
-                      Text('신규', style: TextStyle(fontSize: 15)),
-                      SizedBox(height: 10,),
-                      Text(itemController.items
-                          .fold(
-                              0,
-                              (previousValue, element) => element.type == '신규'
-                                  ? previousValue + element.count!
-                                  : previousValue)
-                          .toString(), style: TextStyle(fontSize: 18)),
-                    ]),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(children: [
-                      Text('총객수', style: TextStyle(fontSize: 15)),
-                      SizedBox(height: 10,),
-                      Text(itemController.items
-                          .fold(
-                              0,
-                              (previousValue, element) =>
-                                  previousValue + element.count!)
-                          .toString(), style: TextStyle(fontSize: 18)),
-                    ]),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(children: [
-                      Text('일매출', style: TextStyle(fontSize: 15)),
-                      SizedBox(height: 10,),
-                      Text(NumberFormat('###,###,###,###').format(
-                          itemController.items.fold(
-                              0,
-                              (previousValue, element) =>
-                                  previousValue + element.price!)), style: TextStyle(fontSize: 18)),
-                    ]),
-                  ),
-                  SizedBox(width: 20,),
-                ],
-              ),
-              Divider(
-                height: 0,
-                thickness: 3,
-              ),
               Expanded(
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: itemController.items.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          widget.day,
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    Divider(
+                      height: 0,
+                      thickness: 3,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(width: 20,),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(children: [
+                            Text('지명', style: TextStyle(fontSize: 15),),
+                            SizedBox(height: 10,),
+                            Text(itemController.items
+                                .fold(
+                                    0,
+                                    (previousValue, element) => element.type == '지명'
+                                        ? previousValue + element.count!
+                                        : previousValue)
+                                .toString(), style: TextStyle(fontSize: 18)),
+                          ]),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(children: [
+                            Text('신규', style: TextStyle(fontSize: 15)),
+                            SizedBox(height: 10,),
+                            Text(itemController.items
+                                .fold(
+                                    0,
+                                    (previousValue, element) => element.type == '신규'
+                                        ? previousValue + element.count!
+                                        : previousValue)
+                                .toString(), style: TextStyle(fontSize: 18)),
+                          ]),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(children: [
+                            Text('총객수', style: TextStyle(fontSize: 15)),
+                            SizedBox(height: 10,),
+                            Text(itemController.items
+                                .fold(
+                                    0,
+                                    (previousValue, element) =>
+                                        previousValue + element.count!)
+                                .toString(), style: TextStyle(fontSize: 18)),
+                          ]),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(children: [
+                            Text('일매출', style: TextStyle(fontSize: 15)),
+                            SizedBox(height: 10,),
+                            Text(NumberFormat('###,###,###,###').format(
+                                itemController.items.fold(
+                                    0,
+                                    (previousValue, element) =>
+                                        previousValue + element.price!)), style: TextStyle(fontSize: 18)),
+                          ]),
+                        ),
+                        SizedBox(width: 20,),
+                      ],
+                    ),
+                    Divider(
+                      height: 0,
+                      thickness: 3,
+                    ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: itemController.items.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        width: MediaQuery.of(context).size.width *
+                                            0.15,
+                                        alignment: Alignment.center,
+                                        child: Text(index.toString())),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width *
+                                            0.15,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                            itemController.items[index].type!)),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width *
+                                            0.15,
+                                        alignment: Alignment.center,
+                                        child: Text(itemController
+                                                .items[index].count
+                                                .toString() +
+                                            '명')),
+                                    Container(
+                                        width: MediaQuery.of(context).size.width *
+                                            0.25,
+                                        alignment: Alignment.center,
+                                        child: Text(NumberFormat('###,###,###,###')
+                                            .format(itemController
+                                                .items[index].price))),
+                                  ],
+                                ),
                                 Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.15,
-                                    alignment: Alignment.center,
-                                    child: Text(index.toString())),
-                                Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.15,
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                        itemController.items[index].type!)),
-                                Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.15,
-                                    alignment: Alignment.center,
-                                    child: Text(itemController
-                                            .items[index].count
-                                            .toString() +
-                                        '명')),
-                                Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.25,
-                                    alignment: Alignment.center,
-                                    child: Text(NumberFormat('###,###,###,###')
-                                        .format(itemController
-                                            .items[index].price))),
+                                  child: IconButton(
+                                      onPressed: () {
+                                        itemController.removeItem(
+                                            itemController.items[index].id!);
+                                      },
+                                      visualDensity: VisualDensity.compact,
+                                      icon: Icon(Icons.delete,)),
+                                )
                               ],
                             ),
-                            Container(
-                              child: IconButton(
-                                  onPressed: () {
-                                    itemController.removeItem(
-                                        itemController.items[index].id!);
-                                  },
-                                  visualDensity: VisualDensity.compact,
-                                  icon: Icon(Icons.delete,)),
-                            )
-                          ],
-                        ),
-                      );
-                    }),
+                          );
+                        }),
+                  ],
+                ),
               ),
               Divider(
                 height: 0,
