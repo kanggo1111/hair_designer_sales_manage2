@@ -67,10 +67,6 @@ class Login extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // TODO: remove this. this is for test.
-                      emailController.value = TextEditingValue(text: 'test@test.com');
-                      passwordController.value = TextEditingValue(text: '123456');
-
                       AuthController.instance.login(
                           emailController.text.trim(),
                           passwordController.text.trim());
@@ -81,7 +77,7 @@ class Login extends StatelessWidget {
                         child: Container(
                           padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: Colors.green,
                               borderRadius: BorderRadius.circular(12)),
                           child: Center(
                             child: Text(
