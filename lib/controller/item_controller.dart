@@ -42,6 +42,11 @@ class ItemController extends GetxController {
         .collection('items').doc(docID).delete();
   }
 
+  void setDate(int newDate){
+    date = newDate;
+    _items.bindStream(fetchItemStream());
+  }
+
   // TODO:
   // void editItem(){
   //

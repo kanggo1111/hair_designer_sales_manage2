@@ -10,7 +10,7 @@ Color appBarContentColor = Colors.white;
 class MainView extends StatelessWidget {
   MainView({super.key});
 
-  bool _isLoaded = true; // TODO:
+  bool isLoaded = true; // TODO:
 
   static const routeCalendar = "/";
   static const routeOneDayView = "/one_day_view";
@@ -18,6 +18,8 @@ class MainView extends StatelessWidget {
   static const routeSettings = "/settings";
 
   static var prevRoute = routeCalendar;
+
+  var duration = const Duration(milliseconds: 500);
 
   Route _onGenerateRoute(RouteSettings setting) {
     // TODO: set transition direction.
@@ -31,24 +33,24 @@ class MainView extends StatelessWidget {
 
     if (setting.name == routeCalendar) {
       return GetPageRoute(
-        page: () => Calendar(),
-        transition: Transition.leftToRight,
-      );
+          page: () => Calendar(),
+          transition: Transition.leftToRight,
+          transitionDuration: duration);
     } else if (setting.name == routeOneDayView) {
       return GetPageRoute(
-        page: () => OneDayView(setting.arguments as String),
-        transition: Transition.downToUp,
-      );
+          page: () => OneDayView(setting.arguments as String),
+          transition: Transition.native,
+          transitionDuration: duration);
     } else if (setting.name == routeStatistics) {
       return GetPageRoute(
-        page: () => Statistics(),
-        transition: dir ? Transition.leftToRight : Transition.rightToLeft,
-      );
+          page: () => Statistics(),
+          transition: dir ? Transition.leftToRight : Transition.rightToLeft,
+          transitionDuration: duration);
     } else if (setting.name == routeSettings) {
       return GetPageRoute(
-        page: () => Settings(),
-        transition: Transition.rightToLeft,
-      );
+          page: () => Settings(),
+          transition: Transition.rightToLeft,
+          transitionDuration: duration);
     } else {
       throw Exception('Unknown route: ${setting.name}');
     }
@@ -68,7 +70,7 @@ class MainView extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  if(currentPage != routeCalendar){
+                  if (currentPage != routeCalendar) {
                     Get.offAllNamed(routeCalendar, id: 1);
                     currentPage = routeCalendar;
                   }
@@ -79,7 +81,7 @@ class MainView extends StatelessWidget {
                 )),
             IconButton(
                 onPressed: () {
-                  if(currentPage != routeStatistics){
+                  if (currentPage != routeStatistics) {
                     Get.offAllNamed(routeStatistics, id: 1);
                     currentPage = routeStatistics;
                   }
@@ -87,7 +89,7 @@ class MainView extends StatelessWidget {
                 icon: Icon(Icons.bar_chart_sharp, color: appBarContentColor)),
             IconButton(
                 onPressed: () {
-                  if(currentPage != routeSettings){
+                  if (currentPage != routeSettings) {
                     Get.offAllNamed(routeSettings, id: 1);
                     currentPage = routeSettings;
                   }
@@ -96,7 +98,7 @@ class MainView extends StatelessWidget {
           ],
         ),
         backgroundColor: Colors.white,
-        body: _isLoaded
+        body: isLoaded
             ? Navigator(
                 key: Get.nestedKey(1),
                 initialRoute: routeCalendar,
