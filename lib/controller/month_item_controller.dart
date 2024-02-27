@@ -23,20 +23,25 @@ class MonthItemController extends GetxController {
     items.clear();
     snapshots.docs.forEach((element) {
       items.add(Item.fromJson(element));
-      update();
     });
+    update();
   }
 
-  int getMonthPrice(){
-    return _items.fold<int>(0, (previousValue, element) => previousValue + element.price!);
-  }
 
   int getDayPrice(int day){
     return _items.fold<int>(0, (previousValue, element) => (element.date!%1000 == day) ? previousValue + element.price! : previousValue);
   }
 
+  int getTypePrice(String type){
+    return _items.fold<int>(0, (previousValue, element) => (element.type == type) ? previousValue + element.price! : previousValue);
+  }
+
   int getTypeCount(String type){
     return _items.fold<int>(0, (previousValue, element) => (element.type == type) ? previousValue + element.count! : previousValue);
+  }
+
+  int getTotalPrice(){
+    return _items.fold<int>(0, (previousValue, element) => previousValue + element.price!);
   }
 
   int getTotalCount(){

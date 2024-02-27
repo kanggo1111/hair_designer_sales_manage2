@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hair_designer_sales_manage2/controller/item_controller.dart';
+import 'package:hair_designer_sales_manage2/controller/month_item_controller.dart';
+import 'package:intl/intl.dart';
 
 late DateTime now;
 late int currentYear;
@@ -12,15 +16,17 @@ class Statistics extends StatefulWidget {
 }
 
 class _StatisticsState extends State<Statistics> {
+  final MonthItemController monthItemController = Get.put(MonthItemController());
+
   @override
   List<dynamic> tableContent = [
     // TODO:
     ['', '수량', '금액'],
-    ['지명', '1', '100,000'],
-    ['신규', '2', '200,000'],
-    ['매출', '3', '300,000'],
-    ['점판', '4', '400,000'],
-    ['계', '10', '1000,000']
+    ['지명', '', ''],
+    ['신규', '', ''],
+    ['대체', '', ''],
+    ['점판', '', ''],
+    ['계', '', '']
   ];
 
   void initState() {
@@ -28,6 +34,7 @@ class _StatisticsState extends State<Statistics> {
     now = DateTime.now();
     currentYear = now.year;
     currentMonth = now.month;
+    refreshStatistics();
     super.initState();
   }
 
@@ -38,6 +45,7 @@ class _StatisticsState extends State<Statistics> {
     } else {
       currentMonth--;
     }
+    refreshStatistics();
   }
 
   void setNextMonth() {
@@ -47,6 +55,33 @@ class _StatisticsState extends State<Statistics> {
     } else {
       currentMonth++;
     }
+    refreshStatistics();
+  }
+
+  void refreshStatistics(){
+    // MonthItemController monthItemController = Get.find<MonthItemController>();
+
+    monthItemController.date = int.parse(
+        DateFormat('yMMdd').format(DateTime(currentYear, currentMonth, 1)));
+    monthItemController.fetchMonthItem();
+    setTableContent();
+    setState(() {
+
+    });
+  }
+
+  void setTableContent(){
+    // tableContent = ['', '수량', '금액'];
+    // for(int i=0 ; i < itemTypeList.length ; i++){
+    //   tableContent.add(itemTypeList[i]);
+    //   tableContent.add(monthItemController.getTypeCount(itemTypeList[i]).toString());
+    //   tableContent.add(monthItemController.getTypePrice(itemTypeList[i]).toString());
+    // }
+    // tableContent.add('d');
+    // tableContent.add('e');
+    // tableContent.add('s');
+    //
+    // print(tableContent);
   }
 
   @override
@@ -63,9 +98,7 @@ class _StatisticsState extends State<Statistics> {
               children: [
                 GestureDetector(
                     onTap: () {
-                      setState(() {
                         setPrevMonth();
-                      });
                     },
                     child: Icon(
                       Icons.arrow_left,
@@ -77,9 +110,7 @@ class _StatisticsState extends State<Statistics> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    setState(() {
                       setNextMonth();
-                    });
                   },
                   child: Icon(
                     Icons.arrow_right,
@@ -93,20 +124,57 @@ class _StatisticsState extends State<Statistics> {
             padding: const EdgeInsets.all(10),
             child: Container(
               decoration: BoxDecoration(border: Border.all(color: Colors.black87)),
-              child: GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, childAspectRatio: 3),
-                  itemCount: 18,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(border: Border.all(color: Colors.black87)),
-                      // TODO: fill tile with data
-                      // TODO: modify ui
-                      child: Text(tableContent[(index/3).toInt()][index%3], style: TextStyle(),),
-                    );
-                  }),
+              child: GetBuilder<MonthItemController>(
+                builder: (_) {
+                  return GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3, childAspectRatio: 3),
+                      itemCount: 18,
+                      itemBuilder: (context, index) {
+                        int row = index~/3;
+                        int col = index%3;
+                        String text = '';
+                        Color rowColor = Colors.white;
+
+                        if(row%2 == 1){
+                          rowColor = Colors.green[50]!;
+                        }
+
+                        if(row == 0){
+                          text = tableContent[row][col];
+                        }
+                        else if(row == 5){
+                          if(col == 0){
+                            text = tableContent[row][col];
+                          }
+                          else if(col == 1){
+                            text = monthItemController.getTotalCount().toString();
+                          }
+                          else if(col == 2){
+                            text = NumberFormat('###,###,###,###').format(monthItemController.getTotalPrice());
+                          }
+                        }
+                        else {
+                          if(col == 0){
+                            text = tableContent[row][col];
+                          }
+                          else if(col == 1){
+                            text = monthItemController.getTypeCount(itemTypeList[row-1]).toString();
+                          }
+                          else if(col == 2){
+                            text = NumberFormat('###,###,###,###').format(monthItemController.getTypePrice(itemTypeList[row-1]));
+                          }
+                        }
+
+                        return Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(border: Border.all(color: Colors.black87), color: rowColor),
+                          child: Text(text, style: TextStyle(fontSize: 16),),
+                        );
+                      });
+                }
+              ),
             ),
           )
         ],

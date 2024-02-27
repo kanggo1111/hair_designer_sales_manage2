@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair_designer_sales_manage2/controller/month_item_controller.dart';
 import 'package:hair_designer_sales_manage2/view/main_view.dart';
-import 'package:hair_designer_sales_manage2/view/one_day_view.dart';
 import 'package:intl/intl.dart';
 
 Color calendarBorderColor = Colors.grey[400]!;
@@ -183,7 +180,7 @@ Widget SummaryTable(){
             Column(children: [
               Text('월매출', style: TextStyle(fontSize: titleFontSize)),
               SizedBox(height: 5,),
-              Text(NumberFormat('###,###,###,###').format(monthItemController.getMonthPrice()), style: TextStyle(fontSize: valueFontSize)),
+              Text(NumberFormat('###,###,###,###').format(monthItemController.getTotalPrice()), style: TextStyle(fontSize: valueFontSize)),
             ]),
             SizedBox(width: 20,),
           ],
