@@ -56,6 +56,8 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String currentPage = routeCalendar;
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
@@ -66,7 +68,10 @@ class MainView extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  Get.offAllNamed(routeCalendar, id: 1);
+                  if(currentPage != routeCalendar){
+                    Get.offAllNamed(routeCalendar, id: 1);
+                    currentPage = routeCalendar;
+                  }
                 },
                 icon: Icon(
                   Icons.calendar_month,
@@ -74,12 +79,18 @@ class MainView extends StatelessWidget {
                 )),
             IconButton(
                 onPressed: () {
-                  Get.offAllNamed(routeStatistics, id: 1);
+                  if(currentPage != routeStatistics){
+                    Get.offAllNamed(routeStatistics, id: 1);
+                    currentPage = routeStatistics;
+                  }
                 },
                 icon: Icon(Icons.bar_chart_sharp, color: appBarContentColor)),
             IconButton(
                 onPressed: () {
-                  Get.offAllNamed(routeSettings, id: 1);
+                  if(currentPage != routeSettings){
+                    Get.offAllNamed(routeSettings, id: 1);
+                    currentPage = routeSettings;
+                  }
                 },
                 icon: Icon(Icons.settings, color: appBarContentColor)),
           ],
