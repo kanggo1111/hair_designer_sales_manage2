@@ -100,70 +100,75 @@ class _OneDayViewState extends State<OneDayView> {
                         ),
                       ),
                       Divider(
+                        color: Theme.of(context).colorScheme.primary,
                         height: 0,
                         thickness: 3,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(width: 20,),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(children: [
-                              Text('지명', style: TextStyle(fontSize: 15),),
-                              SizedBox(height: 10,),
-                              Text(itemController.items
-                                  .fold(
-                                      0,
-                                      (previousValue, element) => element.type == '지명'
-                                          ? previousValue + element.count!
-                                          : previousValue)
-                                  .toString(), style: TextStyle(fontSize: 18)),
-                            ]),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(children: [
-                              Text('신규', style: TextStyle(fontSize: 15)),
-                              SizedBox(height: 10,),
-                              Text(itemController.items
-                                  .fold(
-                                      0,
-                                      (previousValue, element) => element.type == '신규'
-                                          ? previousValue + element.count!
-                                          : previousValue)
-                                  .toString(), style: TextStyle(fontSize: 18)),
-                            ]),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(children: [
-                              Text('총객수', style: TextStyle(fontSize: 15)),
-                              SizedBox(height: 10,),
-                              Text(itemController.items
-                                  .fold(
-                                      0,
-                                      (previousValue, element) =>
-                                          previousValue + element.count!)
-                                  .toString(), style: TextStyle(fontSize: 18)),
-                            ]),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(children: [
-                              Text('일매출', style: TextStyle(fontSize: 15)),
-                              SizedBox(height: 10,),
-                              Text(NumberFormat('###,###,###,###').format(
-                                  itemController.items.fold(
-                                      0,
-                                      (previousValue, element) =>
-                                          previousValue + element.price!)), style: TextStyle(fontSize: 18)),
-                            ]),
-                          ),
-                          SizedBox(width: 20,),
-                        ],
+                      Container(
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(width: 20,),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(children: [
+                                Text('지명', style: TextStyle(fontSize: 15),),
+                                SizedBox(height: 10,),
+                                Text(itemController.items
+                                    .fold(
+                                        0,
+                                        (previousValue, element) => element.type == '지명'
+                                            ? previousValue + element.count!
+                                            : previousValue)
+                                    .toString(), style: TextStyle(fontSize: 18)),
+                              ]),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(children: [
+                                Text('신규', style: TextStyle(fontSize: 15)),
+                                SizedBox(height: 10,),
+                                Text(itemController.items
+                                    .fold(
+                                        0,
+                                        (previousValue, element) => element.type == '신규'
+                                            ? previousValue + element.count!
+                                            : previousValue)
+                                    .toString(), style: TextStyle(fontSize: 18)),
+                              ]),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(children: [
+                                Text('총객수', style: TextStyle(fontSize: 15)),
+                                SizedBox(height: 10,),
+                                Text(itemController.items
+                                    .fold(
+                                        0,
+                                        (previousValue, element) =>
+                                            previousValue + element.count!)
+                                    .toString(), style: TextStyle(fontSize: 18)),
+                              ]),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(children: [
+                                Text('일매출', style: TextStyle(fontSize: 15)),
+                                SizedBox(height: 10,),
+                                Text(NumberFormat('###,###,###,###').format(
+                                    itemController.items.fold(
+                                        0,
+                                        (previousValue, element) =>
+                                            previousValue + element.price!)), style: TextStyle(fontSize: 18)),
+                              ]),
+                            ),
+                            SizedBox(width: 20,),
+                          ],
+                        ),
                       ),
                       Divider(
+                        color: Theme.of(context).colorScheme.primary,
                         height: 0,
                         thickness: 3,
                       ),
@@ -224,6 +229,7 @@ class _OneDayViewState extends State<OneDayView> {
                 ),
               ),
               Divider(
+                color: Theme.of(context).colorScheme.primary,
                 height: 0,
                 thickness: 3,
               ),
@@ -289,7 +295,7 @@ class AddItemContainer extends StatelessWidget {
                                   typeTextEditingController[index].text);
                             },
                             icon: Icon(Icons.remove_circle_outline,
-                                color: Colors.black45)),
+                                color: Theme.of(context).colorScheme.secondary)),
                         Container(
                             width: 60,
                             height: 30,
@@ -337,7 +343,7 @@ class AddItemContainer extends StatelessWidget {
                             },
                             icon: Icon(
                               Icons.add_circle_outline,
-                              color: Colors.black45,
+                              color: Theme.of(context).colorScheme.secondary,
                             )),
                       ],
                     )),

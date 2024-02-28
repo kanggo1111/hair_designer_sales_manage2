@@ -138,7 +138,8 @@ class _StatisticsState extends State<Statistics> {
                         Color rowColor = Colors.white;
 
                         if(row%2 == 1){
-                          rowColor = Colors.green[50]!;
+                          rowColor = Theme.of(context).colorScheme.secondaryContainer;
+                        ;
                         }
 
                         if(row == 0){

@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Hair_designer_sales_manage',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green, primary: Colors.green, secondary: Colors.green),
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,
       ),
       home: Login(),

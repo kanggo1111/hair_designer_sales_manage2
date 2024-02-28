@@ -65,7 +65,7 @@ class _CalendarState extends State<Calendar> {
     calendarTodayBorderColor = Theme.of(context).colorScheme.primary;
 
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.background,
       child: Column(
         children: [
           Padding(
@@ -103,18 +103,20 @@ class _CalendarState extends State<Calendar> {
                 ),
                 SizedBox(height: 10,),
                 Divider(
+                  color: Theme.of(context).colorScheme.primary,
                   height: 0,
                   thickness: 3,
                 ),
-                SummaryTable(),
+                SummaryTable(context),
                 Divider(
+                  color: Theme.of(context).colorScheme.primary,
                   height: 0,
                   thickness: 3,
                 ),
               ],
             ),
           ),
-          CalendarTable(),
+          CalendarTable(context),
         ],
       ),
     );
@@ -146,14 +148,15 @@ int getStartingDay(int year, int month) {
 
 /********** Widget **********/
 
-Widget SummaryTable(){
+Widget SummaryTable(BuildContext context){
   MonthItemController monthItemController = Get.find<MonthItemController>();
   double titleFontSize = 14;
   double valueFontSize = 16;
 
   return GetBuilder<MonthItemController>(
     builder: (_) {
-      return Padding(
+      return Container(
+        color: Theme.of(context).colorScheme.secondaryContainer,
         padding: const EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -190,14 +193,14 @@ Widget SummaryTable(){
   );
 }
 
-Widget CalendarTable() {
+Widget CalendarTable(BuildContext context) {
   int startingDay = getStartingDay(currentYear, currentMonth);
 
   return Container(
     margin: EdgeInsets.all(10),
     decoration: BoxDecoration(
         border:
-            Border.all(color: calendarBorderColor, width: calendarBorderWidth)),
+            Border.all(color: Theme.of(context).colorScheme.secondary, width: calendarBorderWidth)),
     child: GridView.builder(
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -206,15 +209,15 @@ Widget CalendarTable() {
         itemBuilder: (context, index) {
           String day = DateFormat('y-MM-dd').format(
               DateTime(currentYear, currentMonth, 1 - startingDay + index));
-          return DayContainer(day, index);
+          return DayContainer(context, day, index);
         }),
   );
 }
 
-Widget DayContainer(String day, int index) {
+Widget DayContainer(BuildContext context, String day, int index) {
   String dayText = '';
   Color dayColor = Colors.black87;
-  Color priceColor = Colors.blue[300]!;
+  Color priceColor = Theme.of(context).colorScheme.secondary;
   bool needShadow = false;
   bool needTodayBorder = false;
 
@@ -251,10 +254,11 @@ Widget DayContainer(String day, int index) {
         Container(
           padding: needTodayBorder ? null : EdgeInsets.all(3),
           decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.1),
               border: Border.all(
                   color: needTodayBorder
-                      ? calendarTodayBorderColor
-                      : calendarBorderColor,
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.secondary,
                   width: needTodayBorder
                       ? calendarTodayBorderWidth
                       : calendarBorderWidth)),
@@ -284,7 +288,7 @@ Widget DayContainer(String day, int index) {
             ],
           ),
         ),
-        if (needShadow) Container(color: Colors.grey.withOpacity(0.15)),
+        if (needShadow) Container(color: Colors.grey.withOpacity(0.20)),
       ],
     ),
   );

@@ -22,7 +22,7 @@ class Settings extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.green, width: 2),
+                    border: Border.all(color: Theme.of(context).colorScheme.primary, width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(5))
                   ),
                   child: Row(children: [
