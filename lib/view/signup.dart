@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hair_designer_sales_manage2/controller/auth_controller.dart';
+import 'package:hair_designer_sales_manage2/util.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -9,6 +10,7 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
+    var confirmPasswordController = TextEditingController();
 
     return GestureDetector(
       onTap: () {
@@ -63,11 +65,39 @@ class SignUp extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: TextField(
+                          controller: confirmPasswordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              border: InputBorder.none, hintText: 'Confirm Password'),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   GestureDetector(
                     onTap: () {
-                      AuthController.instance.register(
-                          emailController.text.trim(),
-                          passwordController.text.trim());
+                      print(passwordController.text.trim());
+                      print(confirmPasswordController.text.trim());
+                      if(passwordController.text.trim() != confirmPasswordController.text.trim()){
+                        showSnackBar('error', '비밀번호 불일치', '비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
+                      }
+                      else {
+                        AuthController.instance.register(
+                            emailController.text.trim(),
+                            passwordController.text.trim());
+                      }
                     },
                     child: Container(
                       child: Padding(
