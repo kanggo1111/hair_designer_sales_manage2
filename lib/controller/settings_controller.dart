@@ -113,6 +113,8 @@ class SettingsController extends GetxController {
     } on Exception catch (e) {
       // TODO
     }
+
+    update();
   }
 
   void writeSettings(Map<String, dynamic> newSetting) async {
