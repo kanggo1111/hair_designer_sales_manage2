@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hair_designer_sales_manage2/devel.dart';
+import 'package:hair_designer_sales_manage2/util.dart';
 import 'package:hair_designer_sales_manage2/view/login.dart';
 import 'package:hair_designer_sales_manage2/view/main_view.dart';
 
@@ -32,7 +32,6 @@ class AuthController extends GetxController {
             '입력하신 Email로 인증 메일을 보냈습니다. 메일에서 인증링크에 접속하세요.');
       }
 
-      authentication.signOut();
       Get.offAll(() => Login(), transition: Transition.noTransition);
     } else {
       Get.offAll(() => Login(), transition: Transition.noTransition);
@@ -51,8 +50,7 @@ class AuthController extends GetxController {
 
       final currentUser = authentication.currentUser;
       if (currentUser != null) {
-        currentUser.sendEmailVerification();
-        authentication.signOut();
+        await currentUser.sendEmailVerification();
       }
       // await sendEmailVerification(authentication.currentUser);
     } catch (e) {
