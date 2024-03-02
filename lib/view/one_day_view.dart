@@ -254,10 +254,6 @@ class AddItemContainer extends StatelessWidget {
   TextEditingController priceTextEditingController = (TextEditingController()
     ..text = NumberFormat('###,###,###,###').format(priceOfDay));
 
-  // List<TextEditingController> typeTextEditingController =
-  //     List.generate(itemTypeList.length, (index) => TextEditingController());
-  // TextEditingController priceTextEditingController = (TextEditingController());
-
   @override
   Widget build(BuildContext context) {
     void setCount(int index, int delta) {
@@ -382,16 +378,16 @@ class AddItemContainer extends StatelessWidget {
                       textAlign: TextAlign.end,
                       textAlignVertical: TextAlignVertical.center,
                       onChanged: (value) {
-                        if (priceTextEditingController.value.text.length < 4) {
+                        if (priceTextEditingController.value.text.length < 2) {
                           priceTextEditingController.value = TextEditingValue(
                               text: priceTextEditingController.value.text +
-                                  ',000');
+                                  '00');
                         }
                         priceTextEditingController.selection =
                             TextSelection.fromPosition(TextPosition(
                                 offset: priceTextEditingController
                                         .value.text.length -
-                                    4));
+                                    2));
                         priceOfDay = int.parse(priceTextEditingController
                             .value.text
                             .replaceAll(',', ''));
