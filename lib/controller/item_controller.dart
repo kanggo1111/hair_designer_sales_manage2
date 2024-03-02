@@ -47,11 +47,21 @@ class ItemController extends GetxController {
     _items.bindStream(fetchItemStream());
   }
 
-  // TODO:
-  // void editItem(){
-  //
-  // }
-  //
+  void editItem(String docID, int date, String type, int count, int price) async {
+    Item editedItem = Item(
+      id: docID,
+      date: date,
+      type: type,
+      count: count,
+      price: price,
+    );
+
+    await FirebaseFirestore.instance
+        .collection('item')
+        .doc(user!.uid)
+        .collection('items').doc(docID).update(editedItem.toJson());
+  }
+
 
   Stream<List<Item>> fetchItemStream() {
     List<Item> items = [];

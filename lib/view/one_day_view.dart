@@ -71,19 +71,25 @@ class _OneDayViewState extends State<OneDayView> {
               Expanded(
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onPanStart: (details){
+                  onPanStart: (details) {
                     dragStart = details.localPosition;
                   },
-                  onPanUpdate: (details){
+                  onPanUpdate: (details) {
                     dragEnd = details.localPosition;
                   },
-                  onPanEnd: (details){
-                    if((dragEnd.dx - dragStart.dx).abs() > (dragEnd.dy - dragStart.dy).abs()){
-                      if(dragEnd.dx - dragStart.dx > 0){
-                        Get.toNamed(MainView.routeOneDayView, arguments: DateFormat('y-MM-dd').format(DateTime(currentYear, currentMonth, currentDay-1)), id: 1);
-                      }
-                      else if(dragEnd.dx - dragStart.dx < 0){
-                        Get.toNamed(MainView.routeOneDayView, arguments: DateFormat('y-MM-dd').format(DateTime(currentYear, currentMonth, currentDay+1)), id: 1);
+                  onPanEnd: (details) {
+                    if ((dragEnd.dx - dragStart.dx).abs() >
+                        (dragEnd.dy - dragStart.dy).abs()) {
+                      if (dragEnd.dx - dragStart.dx > 0) {
+                        Get.toNamed(MainView.routeOneDayView,
+                            arguments: DateFormat('y-MM-dd').format(DateTime(
+                                currentYear, currentMonth, currentDay - 1)),
+                            id: 1);
+                      } else if (dragEnd.dx - dragStart.dx < 0) {
+                        Get.toNamed(MainView.routeOneDayView,
+                            arguments: DateFormat('y-MM-dd').format(DateTime(
+                                currentYear, currentMonth, currentDay + 1)),
+                            id: 1);
                       }
                     }
                   },
@@ -95,7 +101,8 @@ class _OneDayViewState extends State<OneDayView> {
                           padding: const EdgeInsets.all(10.0),
                           child: Text(
                             widget.day,
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -109,61 +116,89 @@ class _OneDayViewState extends State<OneDayView> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(width: 20,),
+                            SizedBox(
+                              width: 20,
+                            ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(children: [
-                                Text('지명', style: TextStyle(fontSize: 15),),
-                                SizedBox(height: 10,),
-                                Text(itemController.items
-                                    .fold(
-                                        0,
-                                        (previousValue, element) => element.type == '지명'
-                                            ? previousValue + element.count!
-                                            : previousValue)
-                                    .toString(), style: TextStyle(fontSize: 18)),
+                                Text(
+                                  '지명',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    itemController.items
+                                        .fold(
+                                            0,
+                                            (previousValue, element) =>
+                                                element.type == '지명'
+                                                    ? previousValue +
+                                                        element.count!
+                                                    : previousValue)
+                                        .toString(),
+                                    style: TextStyle(fontSize: 18)),
                               ]),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(children: [
                                 Text('신규', style: TextStyle(fontSize: 15)),
-                                SizedBox(height: 10,),
-                                Text(itemController.items
-                                    .fold(
-                                        0,
-                                        (previousValue, element) => element.type == '신규'
-                                            ? previousValue + element.count!
-                                            : previousValue)
-                                    .toString(), style: TextStyle(fontSize: 18)),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    itemController.items
+                                        .fold(
+                                            0,
+                                            (previousValue, element) =>
+                                                element.type == '신규'
+                                                    ? previousValue +
+                                                        element.count!
+                                                    : previousValue)
+                                        .toString(),
+                                    style: TextStyle(fontSize: 18)),
                               ]),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(children: [
                                 Text('총객수', style: TextStyle(fontSize: 15)),
-                                SizedBox(height: 10,),
-                                Text(itemController.items
-                                    .fold(
-                                        0,
-                                        (previousValue, element) =>
-                                            previousValue + element.count!)
-                                    .toString(), style: TextStyle(fontSize: 18)),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    itemController.items
+                                        .fold(
+                                            0,
+                                            (previousValue, element) =>
+                                                previousValue + element.count!)
+                                        .toString(),
+                                    style: TextStyle(fontSize: 18)),
                               ]),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(children: [
                                 Text('일매출', style: TextStyle(fontSize: 15)),
-                                SizedBox(height: 10,),
-                                Text(NumberFormat('###,###,###,###').format(
-                                    itemController.items.fold(
-                                        0,
-                                        (previousValue, element) =>
-                                            previousValue + element.price!)), style: TextStyle(fontSize: 18)),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                    NumberFormat('###,###,###,###').format(
+                                        itemController.items.fold(
+                                            0,
+                                            (previousValue, element) =>
+                                                previousValue +
+                                                element.price!)),
+                                    style: TextStyle(fontSize: 18)),
                               ]),
                             ),
-                            SizedBox(width: 20,),
+                            SizedBox(
+                              width: 20,
+                            ),
                           ],
                         ),
                       ),
@@ -178,24 +213,31 @@ class _OneDayViewState extends State<OneDayView> {
                           itemBuilder: (context, index) {
                             return Card(
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Container(
-                                          width: MediaQuery.of(context).size.width *
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.15,
                                           alignment: Alignment.center,
                                           child: Text(index.toString())),
                                       Container(
-                                          width: MediaQuery.of(context).size.width *
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.15,
                                           alignment: Alignment.center,
-                                          child: Text(
-                                              itemController.items[index].type!)),
+                                          child: Text(itemController
+                                              .items[index].type!)),
                                       Container(
-                                          width: MediaQuery.of(context).size.width *
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.15,
                                           alignment: Alignment.center,
                                           child: Text(itemController
@@ -203,22 +245,49 @@ class _OneDayViewState extends State<OneDayView> {
                                                   .toString() +
                                               '명')),
                                       Container(
-                                          width: MediaQuery.of(context).size.width *
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.25,
                                           alignment: Alignment.center,
-                                          child: Text(NumberFormat('###,###,###,###')
-                                              .format(itemController
-                                                  .items[index].price))),
+                                          child: Text(
+                                              NumberFormat('###,###,###,###')
+                                                  .format(itemController
+                                                      .items[index].price))),
                                     ],
                                   ),
-                                  Container(
-                                    child: IconButton(
-                                        onPressed: () {
-                                          itemController.removeItem(
-                                              itemController.items[index].id!);
-                                        },
-                                        visualDensity: VisualDensity.compact,
-                                        icon: Icon(Icons.delete,)),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        child: IconButton(
+                                            onPressed: () {
+                                              print('edit');
+                                              showEditDialog(context,
+                                                  itemController.items[index]);
+                                              // itemController.editItem(itemController.items[index].id!);
+                                            },
+                                            visualDensity:
+                                                VisualDensity.compact,
+                                            icon: Icon(
+                                              Icons.edit,
+                                            )),
+                                      ),
+                                      Container(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        child: IconButton(
+                                            onPressed: () {
+                                              itemController.removeItem(
+                                                  itemController
+                                                      .items[index].id!);
+                                            },
+                                            visualDensity:
+                                                VisualDensity.compact,
+                                            icon: Icon(
+                                              Icons.delete,
+                                            )),
+                                      ),
+                                    ],
                                   )
                                 ],
                               ),
@@ -291,46 +360,16 @@ class AddItemContainer extends StatelessWidget {
                                   typeTextEditingController[index].text);
                             },
                             icon: Icon(Icons.remove_circle_outline,
-                                color: Theme.of(context).colorScheme.secondary)),
+                                color:
+                                    Theme.of(context).colorScheme.secondary)),
                         Container(
-                            width: 60,
-                            height: 30,
-                            child: TextField(
-                              controller: typeTextEditingController[index],
-                              keyboardType: TextInputType.number,
-                              onTap: () {
-                                typeTextEditingController[index].value =
-                                    TextEditingValue(text: '0');
-                                typeCount[index] = int.parse(
-                                    typeTextEditingController[index].text);
-                              },
-                              inputFormatters: [
-                                FilteringTextInputFormatter(
-                                    RegExp('^[0-9]{1,2}\$'),
-                                    allow: true),
-                              ],
-                              decoration: InputDecoration(isDense: true),
-                              textAlign: TextAlign.center,
-                              textAlignVertical: TextAlignVertical.center,
-                              onChanged: (value) {
-                                if (typeTextEditingController[index]
-                                        .text
-                                        .length ==
-                                    0) {
-                                  typeTextEditingController[index].value =
-                                      TextEditingValue(text: '0');
-                                } else if (typeTextEditingController[index]
-                                    .text
-                                    .startsWith('0')) {
-                                  typeTextEditingController[index]
-                                      .text = int.parse(
-                                          typeTextEditingController[index].text)
-                                      .toString();
-                                }
-                                typeCount[index] = int.parse(
-                                    typeTextEditingController[index].text);
-                              },
-                            )),
+                          width: 60,
+                          height: 30,
+                          child: countTextField(
+                              typeTextEditingController[index],
+                              typeCount,
+                              index),
+                        ),
                         IconButton(
                             onPressed: () {
                               setCount(index, 1);
@@ -380,8 +419,8 @@ class AddItemContainer extends StatelessWidget {
                       onChanged: (value) {
                         if (priceTextEditingController.value.text.length < 2) {
                           priceTextEditingController.value = TextEditingValue(
-                              text: priceTextEditingController.value.text +
-                                  '00');
+                              text:
+                                  priceTextEditingController.value.text + '00');
                         }
                         priceTextEditingController.selection =
                             TextSelection.fromPosition(TextPosition(
@@ -445,6 +484,106 @@ class AddItemContainer extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+Widget countTextField(
+    TextEditingController textEditingController, List countList, int index) {
+  return TextField(
+    controller: textEditingController,
+    keyboardType: TextInputType.number,
+    onTap: () {
+      textEditingController.value = TextEditingValue(text: '0');
+      countList[index] = int.parse(textEditingController.text);
+    },
+    inputFormatters: [
+      FilteringTextInputFormatter(RegExp('^[0-9]{1,2}\$'), allow: true),
+    ],
+    decoration: InputDecoration(isDense: true),
+    textAlign: TextAlign.center,
+    textAlignVertical: TextAlignVertical.center,
+    onChanged: (value) {
+      if (textEditingController.text.length == 0) {
+        textEditingController.value = TextEditingValue(text: '0');
+      } else if (textEditingController.text.startsWith('0')) {
+        textEditingController.text =
+            int.parse(textEditingController.text).toString();
+      }
+      countList[index] = int.parse(textEditingController.text);
+    },
+  );
+}
+
+void showEditDialog(BuildContext context, Item toEditItem) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return EditDialog(toEditItem);
+      });
+}
+
+class EditDialog extends StatefulWidget {
+  EditDialog(this.toEditItem, {super.key});
+
+  Item toEditItem;
+
+  @override
+  State<EditDialog> createState() => _EditDialogState();
+}
+
+class _EditDialogState extends State<EditDialog> {
+  String type = '';
+  int count = 0;
+  int price = 0;
+
+  TextEditingController countController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    type = widget.toEditItem.type!;
+    count = widget.toEditItem.count!;
+    price = widget.toEditItem.price!;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.white,
+      title: Text('수정하려는 항목을 탭하세요'),
+      content: Row(children: [
+        OutlinedButton(onPressed: () {}, child: Text(type)),
+        OutlinedButton(onPressed: () {}, child: Text(count.toString())),
+        TextField(),
+        OutlinedButton(
+            onPressed: () {},
+            child: Text(NumberFormat('###,###,###').format(price))),
+      ]),
+      actions: [
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    Theme.of(context).colorScheme.primaryContainer),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('수정',
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.primary))),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.background),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('취소',
+              style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
+        ),
+      ],
     );
   }
 }
