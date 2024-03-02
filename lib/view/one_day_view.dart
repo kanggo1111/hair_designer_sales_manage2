@@ -549,6 +549,9 @@ class _EditDialogState extends State<EditDialog> {
     type = widget.toEditItem.type!;
     count = widget.toEditItem.count!;
     price = widget.toEditItem.price!;
+
+    countController.text = count.toString();
+    priceController.text = NumberFormat('###,###,###').format(price);
   }
 
   @override
@@ -559,11 +562,18 @@ class _EditDialogState extends State<EditDialog> {
       title: Text('수정하려는 항목을 탭하세요'),
       content: Row(children: [
         OutlinedButton(onPressed: () {}, child: Text(type)),
-        OutlinedButton(onPressed: () {}, child: Text(count.toString())),
-        // countTextField(),
-        OutlinedButton(
-            onPressed: () {},
-            child: Text(NumberFormat('###,###,###').format(price))),
+        // OutlinedButton(onPressed: () {}, child: Text(count.toString())),
+        Container(
+          width: 60,
+            height: 30,
+            child: countTextField(countController, count)),
+        // Container(
+        //     width: 60,
+        //     height: 30,
+        //     child: countTextField(countController, count)),
+        // OutlinedButton(
+        //     onPressed: () {},
+        //     child: Text(NumberFormat('###,###,###').format(price))),
       ]),
       actions: [
         ElevatedButton(
