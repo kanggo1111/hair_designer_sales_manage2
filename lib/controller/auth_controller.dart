@@ -91,4 +91,14 @@ class AuthController extends GetxController {
   void logout() {
     authentication.signOut();
   }
+
+  String getUserEmail(){
+    final currentUser = authentication.currentUser;
+    if(currentUser != null){
+      return currentUser.email!;
+    }
+    else{
+      return '';
+    }
+  }
 }
