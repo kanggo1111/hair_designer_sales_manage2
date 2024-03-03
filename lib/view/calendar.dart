@@ -63,61 +63,89 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     calendarTodayBorderColor = Theme.of(context).colorScheme.primary;
+    Offset dragStart = Offset(0.0, 0.0);
+    Offset dragEnd = Offset(0.0, 0.0);
 
-    return Container(
-      color: Theme.of(context).colorScheme.background,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    GestureDetector(
+    return GestureDetector(
+      onPanStart: (details) {
+        dragStart = details.localPosition;
+      },
+      onPanUpdate: (details) {
+        dragEnd = details.localPosition;
+      },
+      onPanEnd: (details) {
+        if (dragEnd != Offset(0.0, 0.0) &&
+            (dragEnd.dx - dragStart.dx).abs() >
+                (dragEnd.dy - dragStart.dy).abs()) {
+          if (dragEnd.dx - dragStart.dx > 160) {
+            setState(() {
+              setNextMonth();
+            });
+          } else if (dragEnd.dx - dragStart.dx < -160) {
+            setState(() {
+              setPrevMonth();
+            });
+          }
+        }
+
+        dragStart = Offset(0.0, 0.0);
+        dragEnd = Offset(0.0, 0.0);
+      },
+      child: Container(
+        color: Theme.of(context).colorScheme.background,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              setPrevMonth();
+                            });
+                          },
+                          child: Icon(
+                            Icons.arrow_left,
+                            size: 40,
+                          )),
+                      Text(
+                        '$currentYear. ${currentMonth.toString().padLeft(2, '0')}',
+                        style: TextStyle(fontSize: 24),
+                      ),
+                      GestureDetector(
                         onTap: () {
                           setState(() {
-                            setPrevMonth();
+                            setNextMonth();
                           });
                         },
                         child: Icon(
-                          Icons.arrow_left,
+                          Icons.arrow_right,
                           size: 40,
-                        )),
-                    Text(
-                      '$currentYear. ${currentMonth.toString().padLeft(2, '0')}',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          setNextMonth();
-                        });
-                      },
-                      child: Icon(
-                        Icons.arrow_right,
-                        size: 40,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Divider(
-                  color: Theme.of(context).colorScheme.primary,
-                  height: 0,
-                  thickness: 3,
-                ),
-                SummaryTable(context),
-                Divider(
-                  color: Theme.of(context).colorScheme.primary,
-                  height: 0,
-                  thickness: 3,
-                ),
-              ],
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Divider(
+                    color: Theme.of(context).colorScheme.primary,
+                    height: 0,
+                    thickness: 3,
+                  ),
+                  SummaryTable(context),
+                  Divider(
+                    color: Theme.of(context).colorScheme.primary,
+                    height: 0,
+                    thickness: 3,
+                  ),
+                ],
+              ),
             ),
-          ),
-          CalendarTable(context),
-        ],
+            CalendarTable(context),
+          ],
+        ),
       ),
     );
   }

@@ -79,12 +79,12 @@ class _OneDayViewState extends State<OneDayView> {
               if (dragEnd != Offset(0.0, 0.0) &&
                   (dragEnd.dx - dragStart.dx).abs() >
                       (dragEnd.dy - dragStart.dy).abs()) {
-                if (dragEnd.dx - dragStart.dx > 200) {
+                if (dragEnd.dx - dragStart.dx > 160) {
                   Get.toNamed(MainView.routeOneDayView,
                       arguments: DateFormat('y-MM-dd').format(
                           DateTime(currentYear, currentMonth, currentDay - 1)),
                       id: 1);
-                } else if (dragEnd.dx - dragStart.dx < -200) {
+                } else if (dragEnd.dx - dragStart.dx < -160) {
                   Get.toNamed(MainView.routeOneDayView,
                       arguments: DateFormat('y-MM-dd').format(
                           DateTime(currentYear, currentMonth, currentDay + 1)),
