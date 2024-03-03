@@ -107,7 +107,7 @@ class SettingsController extends GetxController {
           .doc(user!.uid)
           .get();
 
-      if(snapshots != null){
+      if(snapshots != null && snapshots.data() != null){
         _settings = MySettings.fromJson(snapshots);
       }
     } on Exception catch (e) {

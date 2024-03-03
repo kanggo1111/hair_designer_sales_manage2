@@ -8,12 +8,8 @@ class MySettings {
 
   MySettings.fromJson(dynamic json) {
     _color = json['color'];
-
-    // TODO: check has key
-    // if ((json as Map<String, dynamic>).containsKey('color') == true) {
-    //   _color = json['color'];
-    // }
   }
+
   String? _color;
 
   String? get color => _color;
