@@ -16,12 +16,6 @@ class ItemController extends GetxController {
     // TODO: implement onReady
     super.onReady();
     _items.bindStream(fetchItemStream());
-    // ever(_items, (_) {
-    //   // _items.forEach((element) {
-    //   //   print(element.id);
-    //   // });
-    //   // print('---------------------------');
-    // });
   }
 
   final FirebaseAuth authentication = FirebaseAuth.instance;

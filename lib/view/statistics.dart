@@ -59,29 +59,9 @@ class _StatisticsState extends State<Statistics> {
   }
 
   void refreshStatistics(){
-    // MonthItemController monthItemController = Get.find<MonthItemController>();
-
     monthItemController.date = int.parse(
         DateFormat('yMMdd').format(DateTime(currentYear, currentMonth, 1)));
     monthItemController.fetchMonthItem();
-    setTableContent();
-    setState(() {
-
-    });
-  }
-
-  void setTableContent(){
-    // tableContent = ['', '수량', '금액'];
-    // for(int i=0 ; i < itemTypeList.length ; i++){
-    //   tableContent.add(itemTypeList[i]);
-    //   tableContent.add(monthItemController.getTypeCount(itemTypeList[i]).toString());
-    //   tableContent.add(monthItemController.getTypePrice(itemTypeList[i]).toString());
-    // }
-    // tableContent.add('d');
-    // tableContent.add('e');
-    // tableContent.add('s');
-    //
-    // print(tableContent);
   }
 
   @override

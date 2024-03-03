@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:intl/intl.dart';
-
 /// id : 20240218124905520
 /// date : "2024-02-03"
 /// type : "지명"

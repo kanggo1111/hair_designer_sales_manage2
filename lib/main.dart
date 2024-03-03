@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
       return GetMaterialApp(
         title: 'Hair_designer_sales_manage',
         theme: ThemeData(
-          // colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
           colorScheme: ColorScheme.fromSeed(
               seedColor: settingsController
                   .getColor(settingsController.settings.color!)),
