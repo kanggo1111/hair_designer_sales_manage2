@@ -5,12 +5,14 @@ import 'package:hair_designer_sales_manage2/controller/settings_controller.dart'
 import 'package:hair_designer_sales_manage2/firebase_options.dart';
 import 'package:get/get.dart';
 import 'package:hair_designer_sales_manage2/view/login.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await MobileAds.instance.initialize();
   runApp(MyApp());
 }
 
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<SettingsController>(builder: (_) {
       return GetMaterialApp(
+        // debugShowCheckedModeBanner: false,
         title: 'Hair_designer_sales_manage',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(

@@ -232,7 +232,7 @@ Widget CalendarTable(BuildContext context) {
     child: GridView.builder(
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 7, childAspectRatio: 0.8),
+            crossAxisCount: 7, childAspectRatio: 0.85),
         itemCount: 42,
         itemBuilder: (context, index) {
           String day = DateFormat('y-MM-dd').format(

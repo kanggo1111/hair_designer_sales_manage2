@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hair_designer_sales_manage2/view/calendar.dart';
 import 'package:hair_designer_sales_manage2/view/one_day_view.dart';
 import 'package:hair_designer_sales_manage2/view/settings.dart';
@@ -68,6 +70,20 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BannerAd banner = BannerAd(
+        size: AdSize.banner,
+
+        /* Test */
+        // adUnitId: "ca-app-pub-3940256099942544/6300978111",
+        /* Release */
+        adUnitId: "ca-app-pub-8991865137623420/9817074799",
+
+        listener: BannerAdListener(
+          onAdFailedToLoad: (Ad ad, LoadAdError error){},
+          onAdLoaded: (_){},
+        ),
+        request: AdRequest())..load();
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
@@ -97,9 +113,20 @@ class MainView extends StatelessWidget {
           ],
         ),
         backgroundColor: Colors.white,
-        body: Navigator(
-            key: Get.nestedKey(1),
-            initialRoute: routeCalendar,
-            onGenerateRoute: _onGenerateRoute));
+        body: Column(
+          children: [
+            Expanded(
+              child: Navigator(
+                  key: Get.nestedKey(1),
+                  initialRoute: routeCalendar,
+                  onGenerateRoute: _onGenerateRoute),
+            ),
+            Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              child: AdWidget(ad: banner),
+            )
+          ],
+        ));
   }
 }
